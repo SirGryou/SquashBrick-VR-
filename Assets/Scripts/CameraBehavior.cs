@@ -45,10 +45,11 @@ public class CameraBehavior : MonoBehaviour
         //et voila
         Ray ray = new Ray(transform.position, transform.forward);
         RaycastHit hit;
-        if(Physics.Raycast(ray, out hit, 10f, panel))
+        if(Physics.Raycast(ray, out hit, 50f, panel))
         {
-            raquette.transform.position = hit.point + hit.normal * 0.01f;
-            //raquette.transform.rotation = Quaternion.Euler(90, hit.collider.gameObject.transform.rotation.y, 0);
+            var wantedPos = hit.point;
+            wantedPos = Vector3.ClampMagnitude(wantedPos, 6f);
+            raquette.transform.position = wantedPos + -hit.normal * 0.01f;
             Debug.Log("lol");
             Debug.DrawLine(transform.position, hit.point, Color.black);
         }
